@@ -1,12 +1,14 @@
-/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
-import { useNavigate } from 'react-router-dom';
-import s from './LoginPage.module.scss';
-import { useEffect, useState } from 'react';
-import { handleAuth } from '../../services/APIrequests';
-import Cookies from 'js-cookie';
 import { Loader } from '../../components/Loader/Loader';
+import { handleAuth } from '../../services/APIrequests';
+
+import s from './LoginPage.module.scss';
 
 export const LoginPage = ({ user, setUser, setAuth }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -38,7 +40,7 @@ export const LoginPage = ({ user, setUser, setAuth }) => {
       const result = await handleAuth(user);
       if (result) {
         Cookies.set('authToken', result.token, { expires: 2 });
-        setAuth(result.token)
+        setAuth(result.token);
         navigate('/');
       } else {
         setError('Не удалось войти. Проверьте логин и пароль.');
@@ -85,4 +87,10 @@ export const LoginPage = ({ user, setUser, setAuth }) => {
       </div>
     </div>
   );
+};
+
+LoginPage.propTypes = {
+  user: PropTypes.object,
+  setUser: PropTypes.func,
+  setAuth: PropTypes.func,
 };

@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
-import { NavBar } from '../../components/Navbar/Navbar';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import {
+  IoArrowBackCircleOutline,
+  IoArrowForwardCircleOutline,
+} from 'react-icons/io5';
+
+import { NavBar } from '../../components/NavBar/NavBar';
 import { TableOrders } from '../../components/TableOrders/TableOrders';
 import { Button } from '../../components/Button/Button';
-import Cookies from 'js-cookie';
-import s from './MainPage.module.scss';
-import { useNavigate } from 'react-router-dom';
-import { handleRequestOrders } from '../../services/APIrequests';
 import { Loader } from '../../components/Loader/Loader';
-import { IoArrowBackCircleOutline, IoArrowForwardCircleOutline } from "react-icons/io5";
+import { handleRequestOrders } from '../../services/APIrequests';
+
+import s from './MainPage.module.scss';
 
 export const MainPage = () => {
   const [orders, setOrders] = useState([]);
@@ -16,11 +21,10 @@ export const MainPage = () => {
   const [statusFilter, setStatusFilter] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [next, setNext] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [pageSize] = useState(10);
-  const token = Cookies.get('authToken');
 
+  const token = Cookies.get('authToken');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,10 +33,10 @@ export const MainPage = () => {
       setError(null);
 
       try {
-        const result = await handleRequestOrders(token, page, pageSize);
+        const result = await handleRequestOrders(token, page);
         setOrders(result.results);
         setOriginalOrders(result.results);
-        setTotalPages(result.total_pages);
+        setNext(result.next?.slice(-1));
       } catch (error) {
         console.log('Ошибка!', error);
         setError('Не удалось получить данные с сервера.');
@@ -42,7 +46,7 @@ export const MainPage = () => {
     };
 
     fetchOrders(token, currentPage);
-  }, [token, currentPage, pageSize]);
+  }, [token, currentPage]);
 
   useEffect(() => {
     applyFilters();
@@ -105,14 +109,12 @@ export const MainPage = () => {
                 onClick={() => goToPage(currentPage - 1)}
                 disabled={currentPage === 1}
               >
-                {<IoArrowBackCircleOutline /> }
+                {<IoArrowBackCircleOutline />}
               </button>
-              <span>
-                {currentPage} {totalPages}
-              </span>
+              <span>{currentPage}</span>
               <button
                 onClick={() => goToPage(currentPage + 1)}
-                disabled={currentPage === totalPages}
+                disabled={next === undefined}
               >
                 {<IoArrowForwardCircleOutline />}
               </button>

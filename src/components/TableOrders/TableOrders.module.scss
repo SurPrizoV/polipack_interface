@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .table {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -6,7 +8,7 @@
   width: 100%;
   padding: 1rem 2rem;
   &:nth-child(even) {
-    background-color: #e7e6e6;
+    background-color: $table_el;
   }
   &_section {
     padding: 1rem;
@@ -18,13 +20,13 @@
     cursor: pointer;
     transition: background-color 0.3s;
     &:hover {
-      background-color: #cdcdcd;
+      background-color: $table_hover;
     }
   }
 }
 
 .icon {
-  color: #888;
+  color: $icon;
   font-size: 2rem;
 }
 
@@ -42,7 +44,7 @@
 }
 
 .error {
-  color: red;
+  color: $error;
   font-size: large;
 }
 

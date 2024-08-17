@@ -1,16 +1,16 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import react from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
+import js from '@eslint/js';
+import globals from 'globals';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default [
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['**/*.{js,jsx}', '**/*.test.{js,jsx}', '**/__tests__/*.{js,jsx}'],
     ignores: ['dist'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: { ...globals.browser, ...globals.vitest },
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
@@ -35,4 +35,4 @@ export default [
       ],
     },
   },
-]
+];

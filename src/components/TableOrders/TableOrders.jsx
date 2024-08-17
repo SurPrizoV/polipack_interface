@@ -1,12 +1,14 @@
-/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import {
   IoChevronDownCircleOutline,
   IoCloseCircleOutline,
 } from 'react-icons/io5';
-import { handleOrderById } from '../../services/APIrequests';
-import { Loader } from '../Loader/Loader';
 import Cookies from 'js-cookie';
+
+import { Loader } from '../Loader/Loader';
+import { handleOrderById } from '../../services/APIrequests';
+
 import s from './TableOrders.module.scss';
 
 export const TableOrders = ({ isHeader, data }) => {
@@ -79,4 +81,9 @@ export const TableOrders = ({ isHeader, data }) => {
       )}
     </>
   );
+};
+
+TableOrders.propTypes = {
+  isHeader: PropTypes.bool,
+  data: PropTypes.object,
 };

@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .button {
   display: flex;
   justify-content: center;
@@ -9,6 +11,6 @@
   transition: 0.3s;
   &:hover {
     transform: scale(1.02);
-    box-shadow: 0 0 0.8rem rgb(208, 208, 208);
+    box-shadow: 0 0 0.8rem $shadow;
   }
 }

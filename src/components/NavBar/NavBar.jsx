@@ -1,6 +1,8 @@
-/* eslint-disable react/prop-types */
-import { Input } from '../Input/Input';
+import PropTypes from 'prop-types';
 import { IoSearchOutline } from 'react-icons/io5';
+
+import { Input } from '../Input/Input';
+
 import s from './NavBar.module.scss';
 
 export const NavBar = ({ setSearchItem, setStatusFilter }) => {
@@ -23,4 +25,9 @@ export const NavBar = ({ setSearchItem, setStatusFilter }) => {
       </select>
     </div>
   );
+};
+
+NavBar.propTypes = {
+  setSearchItem: PropTypes.func,
+  setStatusFilter: PropTypes.func,
 };
